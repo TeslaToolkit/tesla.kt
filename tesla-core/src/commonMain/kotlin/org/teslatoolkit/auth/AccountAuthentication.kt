@@ -4,6 +4,10 @@ import org.teslatoolkit.http.TeslaHttpClient
 import org.teslatoolkit.model.oauth.OauthRequest
 import org.teslatoolkit.token.AccessToken
 
+/**
+ * Authentication Method that uses an email and password to
+ * acquire an access token that will auto-renew if expired.
+ */
 class AccountAuthentication(
   val email: String,
   val password: String
