@@ -11,9 +11,7 @@ env:
 jobs:
   include:
   - stage: build
-    script: ./gradlew build
-  - stage: check
-    script: ./gradlew check
+    script: ./gradlew build check
   - stage: publish
     script: ./gradlew publish
 
