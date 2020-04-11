@@ -5,6 +5,9 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import org.teslatoolkit.TeslaClient
 import org.teslatoolkit.auth.AuthenticationMethod
+import org.teslatoolkit.model.ChargeState
+import org.teslatoolkit.model.DriveState
+import org.teslatoolkit.model.GuiSettings
 import org.teslatoolkit.model.Vehicle
 import org.teslatoolkit.model.VehicleState
 import org.teslatoolkit.model.oauth.OauthRequest
@@ -51,6 +54,39 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
       ),
       http.sendGetRequest(
         "/api/1/vehicles/$id/data_request/vehicle_state",
+        token = auth.getAccessToken(this)
+      )
+    ).response
+
+  override suspend fun getVehicleChargeState(id: Long): ChargeState =
+    json.parse(
+      JsonResponseWrapper.serializer(
+        ChargeState.serializer()
+      ),
+      http.sendGetRequest(
+        "/api/1/vehicles/$id/data_request/charge_state",
+        token = auth.getAccessToken(this)
+      )
+    ).response
+
+  override suspend fun getVehicleGuiSettings(id: Long): GuiSettings =
+    json.parse(
+      JsonResponseWrapper.serializer(
+        GuiSettings.serializer()
+      ),
+      http.sendGetRequest(
+        "/api/1/vehicles/$id/data_request/gui_settings",
+        token = auth.getAccessToken(this)
+      )
+    ).response
+
+  override suspend fun getVehicleDriveState(id: Long): DriveState =
+    json.parse(
+      JsonResponseWrapper.serializer(
+        DriveState.serializer()
+      ),
+      http.sendGetRequest(
+        "/api/1/vehicles/$id/data_request/drive_state",
         token = auth.getAccessToken(this)
       )
     ).response

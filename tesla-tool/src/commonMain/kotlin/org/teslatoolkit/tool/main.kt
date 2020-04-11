@@ -2,7 +2,10 @@ package org.teslatoolkit.tool
 
 import com.github.ajalt.clikt.core.subcommands
 import org.teslatoolkit.tool.vehicle.ListVehicleCommand
+import org.teslatoolkit.tool.vehicle.ShowVehicleChargeStateCommand
 import org.teslatoolkit.tool.vehicle.ShowVehicleCommand
+import org.teslatoolkit.tool.vehicle.ShowVehicleDriveStateCommand
+import org.teslatoolkit.tool.vehicle.ShowVehicleGuiSettingsCommand
 import org.teslatoolkit.tool.vehicle.ShowVehicleStateCommand
 import org.teslatoolkit.tool.vehicle.VehicleCommand
 
@@ -11,7 +14,10 @@ fun main(args: Array<String>) {
     VehicleCommand().subcommands(
       ListVehicleCommand(),
       ShowVehicleCommand(),
-      ShowVehicleStateCommand()
+      ShowVehicleStateCommand(),
+      ShowVehicleChargeStateCommand(),
+      ShowVehicleGuiSettingsCommand(),
+      ShowVehicleDriveStateCommand()
     )
   ).main(args)
 }
