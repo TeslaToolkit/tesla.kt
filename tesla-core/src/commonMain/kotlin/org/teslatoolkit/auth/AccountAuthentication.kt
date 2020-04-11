@@ -26,7 +26,7 @@ class AccountAuthentication(
     return token!!
   }
 
-  protected suspend fun acquirePasswordToken(client: TeslaHttpClient): AccessToken =
+  private suspend fun acquirePasswordToken(client: TeslaHttpClient): AccessToken =
     client.getOauthToken(OauthRequest(
       grantType = "password",
       clientId = client.http.endpoints.clientId,

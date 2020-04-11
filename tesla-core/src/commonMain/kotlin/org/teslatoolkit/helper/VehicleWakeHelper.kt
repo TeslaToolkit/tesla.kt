@@ -9,7 +9,7 @@ import org.teslatoolkit.model.Vehicle
 
 class VehicleWakeHelper(val client: TeslaClient) {
   @ExperimentalTime
-  suspend fun wake(id: Long, attempts: Int = 5, wait: Duration = 5.seconds): Vehicle {
+  suspend fun wake(id: Long, attempts: Int = 20, wait: Duration = 2.seconds): Vehicle {
     for (attempt in 1..attempts) {
       val result = client.vehicleWakeUp(id)
 

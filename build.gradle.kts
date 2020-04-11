@@ -1,8 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
   kotlin("multiplatform") version "1.3.71" apply false
   kotlin("plugin.serialization") version "1.3.71" apply false
+  id("org.jetbrains.dokka") version "0.10.1" apply false
 
   id("com.diffplug.gradle.spotless") version "3.27.2"
 }
@@ -12,6 +14,7 @@ subprojects {
   version = "0.1.0-SNAPSHOT"
 
   apply(plugin = "com.diffplug.gradle.spotless")
+  apply(plugin = "org.jetbrains.dokka")
 
   repositories {
     jcenter()
@@ -21,6 +24,15 @@ subprojects {
     kotlinOptions {
       jvmTarget = "1.8"
       freeCompilerArgs = listOf("-progressive")
+    }
+  }
+
+  tasks {
+    val dokka by getting(DokkaTask::class) {
+      outputFormat = "html"
+      outputDirectory = "$buildDir/dokka"
+
+      multiplatform {}
     }
   }
 

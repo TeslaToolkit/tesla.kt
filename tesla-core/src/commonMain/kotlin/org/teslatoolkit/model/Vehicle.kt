@@ -9,7 +9,7 @@ class Vehicle(
   val globalId: Long,
 
   @SerialName("user_id")
-  val userId: Long,
+  val userId: Long? = null,
 
   @SerialName("vehicle_id")
   val vehicleId: Long,
