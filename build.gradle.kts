@@ -1,6 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.dokka.gradle.DokkaTask
-import kotlin.math.sign
 
 plugins {
   kotlin("multiplatform") version "1.3.71" apply false
@@ -10,13 +8,25 @@ plugins {
   id("com.diffplug.gradle.spotless") version "3.27.2"
 }
 
+allprojects {
+  apply(plugin = "com.diffplug.gradle.spotless")
+
+  spotless {
+    format("misc") {
+      target("**/*.md", "**/.gitignore")
+
+      trimTrailingWhitespace()
+      endWithNewline()
+    }
+  }
+}
+
 subprojects {
   group = "org.teslatoolkit"
-  version = "0.1.0-SNAPSHOT"
+  version = "0.1.0"
 
   val isVersionSnapshot = version.toString().endsWith("SNAPSHOT")
 
-  apply(plugin = "com.diffplug.gradle.spotless")
   apply(plugin = "signing")
   apply(plugin = "maven-publish")
 
@@ -35,13 +45,6 @@ subprojects {
   }
 
   spotless {
-    format("misc") {
-      target("**/*.md", "**/.gitignore")
-
-      trimTrailingWhitespace()
-      endWithNewline()
-    }
-
     kotlin {
       target(fileTree("src") {
         include("**/*.kt")

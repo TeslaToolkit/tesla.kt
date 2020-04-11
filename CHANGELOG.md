@@ -1,5 +1,12 @@
 # Tesla.kt Changelog
 
-# v0.0.1
+# v0.1.0
 
-- Initial Vehicle List Support
+- Initial Release
+- Support for Models
+  - Vehicle
+  - VehicleState
+  - ChargeState
+  - DriveState
+  - GuiSettings
+- Basic Java Wrapper
