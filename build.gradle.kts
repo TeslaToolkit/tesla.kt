@@ -9,7 +9,7 @@ plugins {
 
 subprojects {
   group = "org.teslatoolkit"
-  version = "0.1.0"
+  version = "0.1.0-SNAPSHOT"
 
   apply(plugin = "com.diffplug.gradle.spotless")
 

@@ -1,4 +1,6 @@
 plugins {
+  `maven-publish`
+
   kotlin("multiplatform")
   kotlin("plugin.serialization")
 }
@@ -33,6 +35,10 @@ kotlin {
   }
 
   jvm {
+    mavenPublication {
+      artifactId = "tesla-core-jvm"
+    }
+
     compilations["main"].defaultSourceSet {
       dependencies {
         api(kotlin("stdlib-jdk8"))
@@ -47,6 +53,29 @@ kotlin {
       dependencies {
         implementation(kotlin("test"))
         implementation(kotlin("test-junit5"))
+      }
+    }
+  }
+}
+
+publishing {
+  repositories {
+    maven {
+      name = "github-packages"
+      url = uri("https://maven.pkg.github.com/TeslaToolkit/tesla.kt")
+
+      credentials {
+        username = (
+          project.findProperty("github.packages.username")
+          ?: System.getenv("GITHUB_PACKAGES_USERNAME")
+          ?: "none"
+        ).toString()
+
+        password = (
+          project.findProperty("github.packages.token")
+          ?: System.getenv("GITHUB_PACKAGES_TOKEN")
+          ?: "none"
+        ).toString()
       }
     }
   }
