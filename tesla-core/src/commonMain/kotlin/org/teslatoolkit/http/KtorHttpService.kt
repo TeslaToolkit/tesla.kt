@@ -28,6 +28,10 @@ class KtorHttpService(val client: HttpClient, override val endpoints: ApiEndpoin
       body = content
     }
 
+  override fun close() {
+    client.close()
+  }
+
   private fun HttpRequestBuilder.configureHttpClient(token: AccessToken?) {
     header("User-Agent", "Tesla.kt")
 

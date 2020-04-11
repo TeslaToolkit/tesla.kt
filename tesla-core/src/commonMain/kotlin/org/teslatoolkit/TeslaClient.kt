@@ -15,4 +15,6 @@ interface TeslaClient {
   suspend fun getVehicleDriveState(id: Long): DriveState
 
   suspend fun vehicleWakeUp(id: Long): Vehicle
+
+  fun close()
 }

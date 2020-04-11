@@ -47,6 +47,10 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
       )
     ).response
 
+  override fun close() {
+    http.close()
+  }
+
   override suspend fun getVehicleState(id: Long): VehicleState =
     json.parse(
       JsonResponseWrapper.serializer(

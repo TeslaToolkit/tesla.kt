@@ -9,4 +9,6 @@ interface TeslaHttpService {
   suspend fun sendGetRequest(path: String, token: AccessToken): String
   suspend fun sendPostRequest(path: String, content: String, token: AccessToken): String
   suspend fun sendOauthRequest(content: String): String
+
+  fun close()
 }
