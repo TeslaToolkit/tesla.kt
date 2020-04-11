@@ -14,7 +14,6 @@ subprojects {
   version = "0.1.0-SNAPSHOT"
 
   apply(plugin = "com.diffplug.gradle.spotless")
-  apply(plugin = "org.jetbrains.dokka")
 
   repositories {
     jcenter()
@@ -24,15 +23,6 @@ subprojects {
     kotlinOptions {
       jvmTarget = "1.8"
       freeCompilerArgs = listOf("-progressive")
-    }
-  }
-
-  tasks {
-    val dokka by getting(DokkaTask::class) {
-      outputFormat = "html"
-      outputDirectory = "$buildDir/dokka"
-
-      multiplatform {}
     }
   }
 
