@@ -81,18 +81,33 @@ val emptyJavadocJar by tasks.registering(Jar::class) {
   archiveClassifier.set("javadoc")
 }
 
+fun maybeBase64Decode(input: String?): String? =
+  if (input != null && input.startsWith("base64_")) {
+    String(
+      Base64.getDecoder().decode(input.substring(7)),
+      StandardCharsets.UTF_8
+    )
+  } else {
+    input
+  }
+
 val publishSigningKey: String? =
   project.findProperty("tesla.kt.sign.key")?.toString()
   ?: System.getenv("TESLA_KT_SIGN_KEY")
-val publishSigningPassphrase: String? =
+
+val publishSigningPassphrase: String? = maybeBase64Decode(
   project.findProperty("tesla.kt.sign.passphrase")?.toString()
   ?: System.getenv("TESLA_KT_SIGN_PASSPHRASE")
+)
+
 val publishSonatypeUsername: String? =
   project.findProperty("tesla.kt.sonatype.username")?.toString()
   ?: System.getenv("TESLA_KT_SONATYPE_USERNAME")
-val publishSonatypePassword: String? =
+
+val publishSonatypePassword: String? = maybeBase64Decode(
   project.findProperty("tesla.kt.sonatype.password")?.toString()
   ?: System.getenv("TESLA_KT_SONATYPE_PASSWORD")
+)
 
 publishing {
   publications.withType<MavenPublication>().all {
