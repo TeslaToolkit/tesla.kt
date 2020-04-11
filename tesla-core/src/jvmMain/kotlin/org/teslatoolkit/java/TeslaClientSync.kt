@@ -1,7 +1,12 @@
 package org.teslatoolkit.java
 
+import io.ktor.client.HttpClient
 import kotlinx.coroutines.runBlocking
 import org.teslatoolkit.TeslaClient
+import org.teslatoolkit.auth.AuthenticationMethod
+import org.teslatoolkit.endpoint.ApiEndpoints
+import org.teslatoolkit.http.KtorHttpService
+import org.teslatoolkit.http.TeslaHttpClient
 import org.teslatoolkit.model.ChargeState
 import org.teslatoolkit.model.DriveState
 import org.teslatoolkit.model.GuiSettings
@@ -35,5 +40,18 @@ class TeslaClientSync(val client: TeslaClient) {
 
   fun vehicleWakeUp(id: Long): Vehicle = runBlocking {
     client.vehicleWakeUp(id)
+  }
+
+  companion object {
+    @JvmStatic
+    fun create(auth: AuthenticationMethod): TeslaClientSync = TeslaClientSync(
+      client = TeslaHttpClient(
+        http = KtorHttpService(
+          HttpClient(),
+          ApiEndpoints.Standard
+        ),
+        auth = auth
+      )
+    )
   }
 }
