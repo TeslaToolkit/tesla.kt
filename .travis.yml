@@ -9,7 +9,7 @@ env:
 - CI=true
 
 script:
-- ./gradlew build check publish
+- ./gradlew build check
 
 before_cache:
 - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
