@@ -94,8 +94,6 @@ subprojects {
   extensions.getByType(PublishingExtension::class.java).apply {
     publications.withType<MavenPublication>().all {
       pom {
-        description.set("Tesla API Client Library")
-        name.set("Tesla Toolkit Core")
         url.set("https://github.com/TeslaToolkit/tesla.kt")
         scm {
           url.set("ttps://github.com/TeslaToolkit/tesla.kt")

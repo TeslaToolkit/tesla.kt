@@ -19,11 +19,30 @@ kotlin {
   }
 
   jvm {
+    mavenPublication {
+      artifactId = "tesla-tool-jvm"
+    }
+
     compilations["main"].defaultSourceSet {
       dependencies {
         implementation(kotlin("stdlib-jdk8"))
         implementation(clikt("clikt"))
       }
+    }
+  }
+}
+
+val emptyJavadocJar by tasks.registering(Jar::class) {
+  archiveClassifier.set("javadoc")
+}
+
+publishing {
+  publications.withType<MavenPublication>().all {
+    artifact(emptyJavadocJar.get())
+
+    pom {
+      name.set("Tesla Toolkit Tool")
+      description.set("Tesla CLI Tool")
     }
   }
 }
