@@ -23,7 +23,7 @@ allprojects {
 
 subprojects {
   group = "org.teslatoolkit"
-  version = "0.1.0"
+  version = "0.2.0-SNAPSHOT"
 
   val isVersionSnapshot = version.toString().endsWith("SNAPSHOT")
 
