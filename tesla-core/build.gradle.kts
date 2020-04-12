@@ -68,6 +68,32 @@ kotlin {
       }
     }
   }
+
+  js {
+    mavenPublication {
+      artifactId = "tesla-core-js"
+    }
+
+    compilations["main"].defaultSourceSet {
+      dependencies {
+        api(kotlin("stdlib-js"))
+        api(kotlinx("serialization-runtime-js", kotlinSerializationVersion))
+        api(kotlinx("coroutines-core-js", kotlinCoroutinesVersion))
+        api(ktor("client-serialization-js"))
+        api(ktor("client-js"))
+
+        implementation(npm("abort-controller"))
+        implementation(npm("node-fetch"))
+        implementation(npm("text-encoding"))
+      }
+    }
+
+    compilations["test"].defaultSourceSet {
+      dependencies {
+        implementation(kotlin("test-js"))
+      }
+    }
+  }
 }
 
 val emptyJavadocJar by tasks.registering(Jar::class) {
