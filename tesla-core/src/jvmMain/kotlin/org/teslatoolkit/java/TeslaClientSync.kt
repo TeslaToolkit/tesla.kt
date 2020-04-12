@@ -1,7 +1,6 @@
 package org.teslatoolkit.java
 
 import io.ktor.client.HttpClient
-import java.lang.AutoCloseable
 import kotlinx.coroutines.runBlocking
 import org.teslatoolkit.TeslaClient
 import org.teslatoolkit.auth.AuthenticationMethod
@@ -9,7 +8,9 @@ import org.teslatoolkit.endpoint.ApiEndpoints
 import org.teslatoolkit.http.KtorHttpService
 import org.teslatoolkit.http.TeslaHttpClient
 import org.teslatoolkit.http.TeslaHttpService
+import org.teslatoolkit.java.TeslaClientSync.Companion.create
 import org.teslatoolkit.model.ChargeState
+import org.teslatoolkit.model.ClimateState
 import org.teslatoolkit.model.DriveState
 import org.teslatoolkit.model.GuiSettings
 import org.teslatoolkit.model.Vehicle
@@ -59,6 +60,15 @@ class TeslaClientSync(val client: TeslaClient) : AutoCloseable {
    */
   fun getVehicleChargeState(id: Long): ChargeState = runBlocking {
     client.getVehicleChargeState(id)
+  }
+
+  /**
+   * Get the [ClimateState] for the vehicle specified by [id].
+   *
+   * @param id The global vehicle ID, same as [Vehicle.globalId].
+   */
+  fun getVehicleClimateState(id: Long): ClimateState = runBlocking {
+    client.getVehicleClimateState(id)
   }
 
   /**

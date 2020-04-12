@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class MediaState(
+data class MediaState(
   @SerialName("remote_control_enabled")
-  val isRemoteControlEnabled: Boolean
+  val isRemoteControlEnabled: Boolean? = null
 )

@@ -1,34 +1,34 @@
-package org.teslatoolkit.tool.vehicle
+package org.teslatoolkit.tool.vehicle.show
 
 import com.github.ajalt.clikt.core.requireObject
-import org.teslatoolkit.model.VehicleState
+import org.teslatoolkit.model.Vehicle
 import org.teslatoolkit.tool.OutputFormat
 import org.teslatoolkit.tool.ToolContext
 import org.teslatoolkit.tool.platform.Platform
+import org.teslatoolkit.tool.vehicle.VehicleSpecificCommand
+import org.teslatoolkit.tool.vehicle.printHumanFormat
 
-class ShowVehicleStateCommand : VehicleSpecificCommand(
-  name = "show-state",
-  help = "Show Vehicle State"
+class ShowRawVehicleCommand : VehicleSpecificCommand(
+  name = "vehicle",
+  help = "Show Vehicle"
 ) {
   private val toolContext: ToolContext by requireObject()
 
   override fun run() = Platform.completeCoroutineExecution {
-    requireVehicleWake()
-
-    val state = getTargetVehicleState()
+    val vehicle = possibleVehicleWake()
 
     when (toolContext.format) {
       OutputFormat.Json -> println(toolContext.prettyPrintJson.stringify(
-        VehicleState.serializer(),
-        state
+        Vehicle.serializer(),
+        vehicle
       ))
 
       OutputFormat.JsonCompact -> println(toolContext.json.stringify(
-        VehicleState.serializer(),
-        state
+        Vehicle.serializer(),
+        vehicle
       ))
 
-      OutputFormat.Human -> state.printHumanFormat()
+      OutputFormat.Human -> vehicle.printHumanFormat()
     }
   }
 }

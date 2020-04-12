@@ -1,34 +1,36 @@
-package org.teslatoolkit.tool.vehicle
+package org.teslatoolkit.tool.vehicle.show
 
 import com.github.ajalt.clikt.core.requireObject
-import org.teslatoolkit.model.GuiSettings
+import org.teslatoolkit.model.DriveState
 import org.teslatoolkit.tool.OutputFormat
 import org.teslatoolkit.tool.ToolContext
 import org.teslatoolkit.tool.platform.Platform
+import org.teslatoolkit.tool.vehicle.VehicleSpecificCommand
+import org.teslatoolkit.tool.vehicle.printHumanFormat
 
-class ShowVehicleGuiSettingsCommand : VehicleSpecificCommand(
-  name = "show-gui-settings",
-  help = "Show Vehicle GUI Settings"
+class ShowVehicleDriveStateCommand : VehicleSpecificCommand(
+  name = "drive",
+  help = "Show Vehicle Drive State"
 ) {
   private val toolContext: ToolContext by requireObject()
 
   override fun run() = Platform.completeCoroutineExecution {
     requireVehicleWake()
 
-    val settings = getTargetVehicleGuiSettings()
+    val state = getTargetVehicleDriveState()
 
     when (toolContext.format) {
       OutputFormat.Json -> println(toolContext.prettyPrintJson.stringify(
-        GuiSettings.serializer(),
-        settings
+        DriveState.serializer(),
+        state
       ))
 
       OutputFormat.JsonCompact -> println(toolContext.json.stringify(
-        GuiSettings.serializer(),
-        settings
+        DriveState.serializer(),
+        state
       ))
 
-      OutputFormat.Human -> settings.printHumanFormat()
+      OutputFormat.Human -> state.printHumanFormat()
     }
   }
 }

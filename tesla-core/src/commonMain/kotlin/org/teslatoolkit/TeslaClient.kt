@@ -1,9 +1,11 @@
 package org.teslatoolkit
 
 import org.teslatoolkit.model.ChargeState
+import org.teslatoolkit.model.ClimateState
 import org.teslatoolkit.model.DriveState
 import org.teslatoolkit.model.GuiSettings
 import org.teslatoolkit.model.Vehicle
+import org.teslatoolkit.model.VehicleConfig
 import org.teslatoolkit.model.VehicleState
 
 /**
@@ -39,6 +41,13 @@ interface TeslaClient {
   suspend fun getVehicleChargeState(id: Long): ChargeState
 
   /**
+   * Get the [ClimateState] for the vehicle specified by [id].
+   *
+   * @param id The global vehicle ID, same as [Vehicle.globalId].
+   */
+  suspend fun getVehicleClimateState(id: Long): ClimateState
+
+  /**
    * Get the [DriveState] for the vehicle specified by [id].
    *
    * @param id The global vehicle ID, same as [Vehicle.globalId].
@@ -51,6 +60,13 @@ interface TeslaClient {
    * @param id The global vehicle ID, same as [Vehicle.globalId].
    */
   suspend fun getVehicleGuiSettings(id: Long): GuiSettings
+
+  /**
+   * Get the [VehicleConfig] for the vehicle specified by [id].
+   *
+   * @param id The global vehicle ID, same as [Vehicle.globalId].
+   */
+  suspend fun getVehicleConfig(id: Long): VehicleConfig
 
   /**
    * Attempt to wake-up the vehicle specified by [id].

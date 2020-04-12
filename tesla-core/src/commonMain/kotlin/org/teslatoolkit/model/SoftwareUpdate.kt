@@ -4,22 +4,22 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class SoftwareUpdate(
+data class SoftwareUpdate(
   @SerialName("download_perc")
-  val downloadPercentage: Double,
+  val downloadPercentage: Double? = null,
 
   @SerialName("expected_duration_sec")
-  val expectedDurationSeconds: Int,
+  val expectedDurationSeconds: Int? = null,
 
   @SerialName("install_perc")
-  val installPercentage: Double,
+  val installPercentage: Double? = null,
 
   @SerialName("scheduled_time_ms")
-  val scheduledTimeMilliseconds: Long = 0,
+  val scheduledTimeMilliseconds: Long? = null,
 
   @SerialName("status")
-  val status: String = "unknown",
+  val status: String? = null,
 
   @SerialName("version")
-  val version: String
+  val version: String? = null
 )

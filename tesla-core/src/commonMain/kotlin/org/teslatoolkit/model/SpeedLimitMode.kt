@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class SpeedLimitMode(
+data class SpeedLimitMode(
   @SerialName("active")
   val isActive: Boolean,
 

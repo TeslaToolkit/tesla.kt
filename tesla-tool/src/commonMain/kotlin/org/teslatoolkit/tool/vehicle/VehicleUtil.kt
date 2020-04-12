@@ -1,9 +1,11 @@
 package org.teslatoolkit.tool.vehicle
 
 import org.teslatoolkit.model.ChargeState
+import org.teslatoolkit.model.ClimateState
 import org.teslatoolkit.model.DriveState
 import org.teslatoolkit.model.GuiSettings
 import org.teslatoolkit.model.Vehicle
+import org.teslatoolkit.model.VehicleConfig
 import org.teslatoolkit.model.VehicleState
 
 private fun Boolean.open() = if (this) "Open" else "Closed"
@@ -22,9 +24,9 @@ fun Vehicle.printHumanFormat() {
 fun VehicleState.printHumanFormat() {
   println("Vehicle State:")
   println("  Firmware Version: $carVersion")
-  println("  Lock State: ${isLocked.locked()}")
-  println("  Remote Start State: ${isRemoteStart.enabled()}")
-  println("  Remote Start Support: ${isRemoteStartSupported.supported()}")
+  println("  Lock State: ${isLocked?.locked()}")
+  println("  Remote Start State: ${isRemoteStart?.enabled()}")
+  println("  Remote Start Support: ${isRemoteStartSupported?.supported()}")
   println("  Doors:")
   println("    Driver Side Front Door: ${isDriverSideFrontDoorOpen.open()}")
   println("    Driver Side Rear Door: ${isDriverSideRearDoorOpen.open()}")
@@ -36,7 +38,7 @@ fun VehicleState.printHumanFormat() {
 
 fun ChargeState.printHumanFormat() {
   println("Charge State:")
-  println("  Battery Heater: ${isBatteryHeaterOn.on()}")
+  println("  Battery Heater: ${isBatteryHeaterOn?.on()}")
   println("  Battery Level: $batteryLevel")
   println("  Usable Battery Level: $usableBatteryLevel")
   println("  Battery Range: $batteryRange")
@@ -44,12 +46,12 @@ fun ChargeState.printHumanFormat() {
   println("  Ideal Battery Range: $idealBatteryRange")
   println("  Charge Miles Added Ideal: $chargeMilesAddedIdeal")
   println("  Charge Miles Added Rated: $chargeMilesAddedRated")
-  println("  Charge Port Door: ${isChargePortDoorOpen.open()}")
+  println("  Charge Port Door: ${isChargePortDoorOpen?.open()}")
 }
 
 fun GuiSettings.printHumanFormat() {
   println("GUI Settings:")
-  println("  24-Hour Time: ${isTwentyFourHourTime.enabled()}")
+  println("  24-Hour Time: ${isTwentyFourHourTime?.enabled()}")
   println("  Charge Rate Units: $chargeRateUnits")
   println("  Distance Units: $distanceUnits")
   println("  Range Display Type: $rangeDisplayType")
@@ -64,4 +66,16 @@ fun DriveState.printHumanFormat() {
   println("  Power: $power")
   println("  Speed: $speed")
   println("  Shift State: $shiftState")
+}
+
+fun ClimateState.printHumanFormat() {
+  println("Climate State:")
+  println("  Inside Temperature: $insideTemperature")
+}
+
+fun VehicleConfig.printHumanFormat() {
+  println("Vehicle Configuration:")
+  println("  Car Type: $carType")
+  println("  Wheel Type: $wheelType")
+  println("  Has Air Suspension: $hasAirSuspension")
 }

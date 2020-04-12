@@ -48,12 +48,16 @@ class TeslaTool : CliktCommand(
   }.default(OutputFormat.Human)
 
   override fun run() {
+    toolContext.auth = createClientAuthentication()
+
+    toolContext.http = KtorHttpService(
+      client = HttpClient(),
+      endpoints = ApiEndpoints.Standard
+    )
+
     toolContext.client = TeslaHttpClient(
-      http = KtorHttpService(
-        client = HttpClient(),
-        endpoints = ApiEndpoints.Standard
-      ),
-      auth = createClientAuthentication()
+      http = toolContext.http!!,
+      auth = toolContext.auth!!
     )
     toolContext.format = format
   }

@@ -4,82 +4,82 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class ChargeState(
+data class ChargeState(
   @SerialName("battery_heater_on")
-  val isBatteryHeaterOn: Boolean,
+  val isBatteryHeaterOn: Boolean? = null,
 
   @SerialName("battery_level")
-  val batteryLevel: Double,
+  val batteryLevel: Double? = null,
 
   @SerialName("usable_battery_level")
-  val usableBatteryLevel: Double,
+  val usableBatteryLevel: Double? = null,
 
   @SerialName("battery_range")
-  val batteryRange: Double,
+  val batteryRange: Double? = null,
 
   @SerialName("charge_current_request")
-  val chargeCurrentRequest: Double,
+  val chargeCurrentRequest: Double? = null,
 
   @SerialName("charge_current_request_max")
-  val chargeCurrentRequestMax: Double,
+  val chargeCurrentRequestMax: Double? = null,
 
   @SerialName("charge_enable_request")
-  val chargeEnableRequest: Boolean,
+  val chargeEnableRequest: Boolean? = null,
 
   @SerialName("charge_energy_added")
-  val chargeEnergyAdded: Double,
+  val chargeEnergyAdded: Double? = null,
 
   @SerialName("charge_limit_soc")
-  val chargeLimitSoc: Double,
+  val chargeLimitSoc: Double? = null,
 
   @SerialName("charge_limit_soc_max")
-  val chargeLimitSocMax: Double,
+  val chargeLimitSocMax: Double? = null,
 
   @SerialName("charge_limit_soc_min")
-  val chargeLimitSocMin: Double,
+  val chargeLimitSocMin: Double? = null,
 
   @SerialName("charge_limit_soc_std")
-  val chargeLimitSocStd: Double,
+  val chargeLimitSocStd: Double? = null,
 
   @SerialName("charge_miles_added_ideal")
-  val chargeMilesAddedIdeal: Double,
+  val chargeMilesAddedIdeal: Double? = null,
 
   @SerialName("charge_miles_added_rated")
-  val chargeMilesAddedRated: Double,
+  val chargeMilesAddedRated: Double? = null,
 
   @SerialName("charge_port_door_open")
-  val isChargePortDoorOpen: Boolean,
+  val isChargePortDoorOpen: Boolean? = null,
 
   @SerialName("charge_port_latch")
-  val chargePortLatch: String,
+  val chargePortLatch: String? = null,
 
   @SerialName("charge_rate")
-  val chargeRate: Double,
+  val chargeRate: Double? = null,
 
   @SerialName("charge_to_max_range")
-  val chargeToMaxRange: Boolean,
+  val chargeToMaxRange: Boolean? = null,
 
   @SerialName("charger_actual_current")
-  val chargerActualCurrent: Double,
+  val chargerActualCurrent: Double? = null,
 
   @SerialName("charger_pilot_current")
-  val chargerPilotCurrent: Double,
+  val chargerPilotCurrent: Double? = null,
 
   @SerialName("charging_state")
-  val chargingState: String,
+  val chargingState: String? = null,
 
   @SerialName("est_battery_range")
-  val estimatedBatteryRange: Double,
+  val estimatedBatteryRange: Double? = null,
 
   @SerialName("ideal_battery_range")
-  val idealBatteryRange: Double,
+  val idealBatteryRange: Double? = null,
 
   @SerialName("not_enough_power_to_heat")
-  val isNotEnoughPowerToHeat: Boolean,
+  val isNotEnoughPowerToHeat: Boolean? = null,
 
   @SerialName("trip_charging")
-  val isTripCharging: Boolean,
+  val isTripCharging: Boolean? = null,
 
   @SerialName("timestamp")
-  val timestampUnixMillis: Long
+  val timestampUnixMillis: Long? = null
 )

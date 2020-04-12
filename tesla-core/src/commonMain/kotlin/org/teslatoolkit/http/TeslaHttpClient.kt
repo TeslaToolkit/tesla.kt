@@ -6,9 +6,11 @@ import kotlinx.serialization.json.JsonConfiguration
 import org.teslatoolkit.TeslaClient
 import org.teslatoolkit.auth.AuthenticationMethod
 import org.teslatoolkit.model.ChargeState
+import org.teslatoolkit.model.ClimateState
 import org.teslatoolkit.model.DriveState
 import org.teslatoolkit.model.GuiSettings
 import org.teslatoolkit.model.Vehicle
+import org.teslatoolkit.model.VehicleConfig
 import org.teslatoolkit.model.VehicleState
 import org.teslatoolkit.model.oauth.OauthRequest
 import org.teslatoolkit.token.AccessToken
@@ -47,10 +49,6 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
       )
     ).response
 
-  override fun close() {
-    http.close()
-  }
-
   override suspend fun getVehicleState(id: Long): VehicleState =
     json.parse(
       JsonResponseWrapper.serializer(
@@ -69,6 +67,17 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
       ),
       http.sendGetRequest(
         "/api/1/vehicles/$id/data_request/charge_state",
+        token = auth.getAccessToken(this)
+      )
+    ).response
+
+  override suspend fun getVehicleClimateState(id: Long): ClimateState =
+    json.parse(
+      JsonResponseWrapper.serializer(
+        ClimateState.serializer()
+      ),
+      http.sendGetRequest(
+        "/api/1/vehicles/$id/data_request/climate_state",
         token = auth.getAccessToken(this)
       )
     ).response
@@ -95,6 +104,17 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
       )
     ).response
 
+  override suspend fun getVehicleConfig(id: Long): VehicleConfig =
+    json.parse(
+      JsonResponseWrapper.serializer(
+        VehicleConfig.serializer()
+      ),
+      http.sendGetRequest(
+        "/api/1/vehicles/$id/data_request/vehicle_config",
+        token = auth.getAccessToken(this)
+      )
+    ).response
+
   suspend fun getOauthToken(request: OauthRequest): AccessToken =
     json.parse(
       JsonAccessToken.serializer(),
@@ -105,6 +125,10 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
         )
       )
     )
+
+  override fun close() {
+    http.close()
+  }
 
   companion object {
     @Suppress("EXPERIMENTAL_API_USAGE")

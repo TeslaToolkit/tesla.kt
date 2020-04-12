@@ -4,37 +4,37 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class DriveState(
+data class DriveState(
   @SerialName("gps_as_of")
-  val gpsAsOfUnixMillis: Long?,
+  val gpsAsOfUnixMillis: Long? = null,
 
   @SerialName("heading")
-  val heading: Double?,
+  val heading: Double? = null,
 
   @SerialName("latitude")
-  val latitude: Double?,
+  val latitude: Double? = null,
 
   @SerialName("longitude")
-  val longitude: Double?,
+  val longitude: Double? = null,
 
   @SerialName("native_location_supported")
-  val nativeLocationSupported: Int?,
+  val nativeLocationSupported: Int? = null,
 
   @SerialName("native_type")
-  val nativeType: String?,
+  val nativeType: String? = null,
 
   @SerialName("native_latitude")
-  val nativeLatitude: Double?,
+  val nativeLatitude: Double? = null,
 
   @SerialName("native_longitude")
-  val nativeLongitude: Double?,
+  val nativeLongitude: Double? = null,
 
   @SerialName("power")
-  val power: Double?,
+  val power: Double? = null,
 
   @SerialName("shift_state")
-  val shiftState: String?,
+  val shiftState: String? = null,
 
   @SerialName("speed")
-  val speed: Double?
+  val speed: Double? = null
 )

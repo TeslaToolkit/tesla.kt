@@ -9,9 +9,11 @@ import com.github.ajalt.clikt.parameters.types.long
 import kotlin.time.ExperimentalTime
 import org.teslatoolkit.helper.VehicleWakeHelper
 import org.teslatoolkit.model.ChargeState
+import org.teslatoolkit.model.ClimateState
 import org.teslatoolkit.model.DriveState
 import org.teslatoolkit.model.GuiSettings
 import org.teslatoolkit.model.Vehicle
+import org.teslatoolkit.model.VehicleConfig
 import org.teslatoolkit.model.VehicleState
 import org.teslatoolkit.tool.ToolContext
 
@@ -45,10 +47,14 @@ abstract class VehicleSpecificCommand(name: String, help: String) : CliktCommand
 
   suspend fun getTargetVehicle(): Vehicle =
     toolContext.client!!.getVehicle(id)
+  suspend fun getTargetVehicleConfig(): VehicleConfig =
+    toolContext.client!!.getVehicleConfig(id)
   suspend fun getTargetVehicleState(): VehicleState =
     toolContext.client!!.getVehicleState(id)
   suspend fun getTargetVehicleChargeState(): ChargeState =
     toolContext.client!!.getVehicleChargeState(id)
+  suspend fun getTargetVehicleClimateState(): ClimateState =
+    toolContext.client!!.getVehicleClimateState(id)
   suspend fun getTargetVehicleGuiSettings(): GuiSettings =
     toolContext.client!!.getVehicleGuiSettings(id)
   suspend fun getTargetVehicleDriveState(): DriveState =
