@@ -1,4 +1,7 @@
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.nio.charset.StandardCharsets
+import java.util.Base64
 
 plugins {
   kotlin("multiplatform") version "1.3.71" apply false
@@ -69,8 +72,8 @@ subprojects {
   fun maybeBase64Decode(input: String?): String? =
     if (input != null && input.startsWith("base64_")) {
       String(
-        java.util.Base64.getDecoder().decode(input.substring(7)),
-        java.nio.charset.StandardCharsets.UTF_8
+        Base64.getDecoder().decode(input.substring(7)),
+        StandardCharsets.UTF_8
       )
     } else {
       input

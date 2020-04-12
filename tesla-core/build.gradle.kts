@@ -1,4 +1,3 @@
-
 import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
@@ -19,12 +18,6 @@ val klockVersion = "1.7.3"
 fun ktor(name: String): String = "io.ktor:ktor-$name:$ktorVersion"
 fun kotlinx(name: String, version: String): String = "org.jetbrains.kotlinx:kotlinx-$name:$version"
 fun klock(name: String): String = "com.soywiz.korlibs.klock:$name:$klockVersion"
-
-val dokka by tasks.getting(DokkaTask::class) {
-  outputDirectory = "$rootDir/docs/api"
-  outputFormat = "gfm"
-  multiplatform {}
-}
 
 kotlin {
   sourceSets {
@@ -91,6 +84,22 @@ kotlin {
     compilations["test"].defaultSourceSet {
       dependencies {
         implementation(kotlin("test-js"))
+      }
+    }
+  }
+}
+
+tasks.withType<DokkaTask> {
+  multiplatform {
+    register("js") {}
+    register("jvm") {}
+    register("common") {}
+
+    register("global") {
+      sourceLink {
+        path = "src/main/kotlin"
+        url = "https://github.com/TeslaToolkit/tesla.kit/blob/master/${project.name}/src/main/kotlin"
+        lineSuffix = "#L"
       }
     }
   }
