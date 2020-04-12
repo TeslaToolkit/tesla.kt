@@ -22,13 +22,6 @@ kotlin {
     mavenPublication {
       artifactId = "tesla-tool-jvm"
     }
-
-    compilations["main"].defaultSourceSet {
-      dependencies {
-        implementation(kotlin("stdlib-jdk8"))
-        implementation(clikt("clikt"))
-      }
-    }
   }
 }
 

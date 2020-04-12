@@ -1,4 +1,5 @@
 import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.kotlin.gradle.targets.js.npm.NpmResolverPlugin
 
 plugins {
   `maven-publish`
@@ -9,6 +10,8 @@ plugins {
 
   id("org.jetbrains.dokka")
 }
+
+plugins.apply(NpmResolverPlugin::class.java)
 
 val ktorVersion = "1.3.2"
 val kotlinSerializationVersion = "0.20.0"
@@ -26,7 +29,6 @@ kotlin {
         api(kotlin("stdlib-common"))
         api(kotlinx("serialization-runtime-common", kotlinSerializationVersion))
         api(ktor("client-serialization"))
-        api(ktor("client-cio"))
         api(klock("klock"))
       }
     }
