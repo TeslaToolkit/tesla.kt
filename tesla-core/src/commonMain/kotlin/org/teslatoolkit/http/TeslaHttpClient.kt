@@ -1,10 +1,12 @@
 package org.teslatoolkit.http
 
+import io.ktor.client.HttpClient
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import org.teslatoolkit.TeslaClient
 import org.teslatoolkit.auth.AuthenticationMethod
+import org.teslatoolkit.endpoint.ApiEndpoints
 import org.teslatoolkit.model.ChargeState
 import org.teslatoolkit.model.ClimateState
 import org.teslatoolkit.model.DriveState
@@ -135,5 +137,20 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
     private val json = Json(JsonConfiguration(
       ignoreUnknownKeys = true
     ))
+
+    /**
+     * Creates a [TeslaHttpClient] with the provided [AuthenticationMethod].
+     *
+     * @param auth The authentication method to use.
+     * @return The instance of [TeslaHttpClient].
+     */
+    fun create(auth: AuthenticationMethod): TeslaHttpClient =
+      TeslaHttpClient(
+        http = KtorHttpService(
+          client = HttpClient(),
+          endpoints = ApiEndpoints.Standard
+        ),
+        auth = auth
+      )
   }
 }
