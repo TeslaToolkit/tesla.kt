@@ -14,6 +14,8 @@ import org.teslatoolkit.model.GuiSettings
 import org.teslatoolkit.model.Vehicle
 import org.teslatoolkit.model.VehicleConfig
 import org.teslatoolkit.model.VehicleState
+import org.teslatoolkit.model.command.CommandRequest
+import org.teslatoolkit.model.command.CommandResponse
 import org.teslatoolkit.model.oauth.OauthRequest
 import org.teslatoolkit.token.AccessToken
 import org.teslatoolkit.token.JsonAccessToken
@@ -23,7 +25,7 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
     json.parse(
       JsonResponseWrapper.serializer(ListSerializer(Vehicle.serializer())),
       http.sendGetRequest(
-        "/api/1/vehicles",
+        path = "/api/1/vehicles",
         token = auth.getAccessToken(this)
       )
     ).response
@@ -34,20 +36,8 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
         Vehicle.serializer()
       ),
       http.sendGetRequest(
-        "/api/1/vehicles/$id",
+        path = "/api/1/vehicles/$id",
         token = auth.getAccessToken(this)
-      )
-    ).response
-
-  override suspend fun vehicleWakeUp(id: Long): Vehicle =
-    json.parse(
-      JsonResponseWrapper.serializer(
-        Vehicle.serializer()
-      ),
-      http.sendPostRequest(
-        "/api/1/vehicles/$id/wake_up",
-        token = auth.getAccessToken(this),
-        content = ""
       )
     ).response
 
@@ -57,7 +47,7 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
         VehicleState.serializer()
       ),
       http.sendGetRequest(
-        "/api/1/vehicles/$id/data_request/vehicle_state",
+        path = "/api/1/vehicles/$id/data_request/vehicle_state",
         token = auth.getAccessToken(this)
       )
     ).response
@@ -68,7 +58,7 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
         ChargeState.serializer()
       ),
       http.sendGetRequest(
-        "/api/1/vehicles/$id/data_request/charge_state",
+        path = "/api/1/vehicles/$id/data_request/charge_state",
         token = auth.getAccessToken(this)
       )
     ).response
@@ -79,7 +69,7 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
         ClimateState.serializer()
       ),
       http.sendGetRequest(
-        "/api/1/vehicles/$id/data_request/climate_state",
+        path = "/api/1/vehicles/$id/data_request/climate_state",
         token = auth.getAccessToken(this)
       )
     ).response
@@ -90,7 +80,7 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
         GuiSettings.serializer()
       ),
       http.sendGetRequest(
-        "/api/1/vehicles/$id/data_request/gui_settings",
+        path = "/api/1/vehicles/$id/data_request/gui_settings",
         token = auth.getAccessToken(this)
       )
     ).response
@@ -101,7 +91,7 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
         DriveState.serializer()
       ),
       http.sendGetRequest(
-        "/api/1/vehicles/$id/data_request/drive_state",
+        path = "/api/1/vehicles/$id/data_request/drive_state",
         token = auth.getAccessToken(this)
       )
     ).response
@@ -112,7 +102,7 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
         VehicleConfig.serializer()
       ),
       http.sendGetRequest(
-        "/api/1/vehicles/$id/data_request/vehicle_config",
+        path = "/api/1/vehicles/$id/data_request/vehicle_config",
         token = auth.getAccessToken(this)
       )
     ).response
@@ -127,6 +117,30 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
         )
       )
     )
+
+  override suspend fun <T : CommandRequest<T>> sendVehicleCommand(id: Long, command: T): CommandResponse =
+    json.parse(
+      JsonResponseWrapper.serializer(
+        CommandResponse.serializer()
+      ),
+      http.sendPostRequest(
+        path = "/api/1/vehicles/$id/command/${command.commandName}",
+        token = auth.getAccessToken(this),
+        content = json.stringify(command.serializer(), command)
+      )
+    ).response
+
+  override suspend fun vehicleWakeUp(id: Long): Vehicle =
+    json.parse(
+      JsonResponseWrapper.serializer(
+        Vehicle.serializer()
+      ),
+      http.sendPostRequest(
+        path = "/api/1/vehicles/$id/wake_up",
+        token = auth.getAccessToken(this),
+        content = ""
+      )
+    ).response
 
   override fun close() {
     http.close()

@@ -20,7 +20,7 @@ import org.teslatoolkit.tool.ToolContext
 abstract class VehicleSpecificCommand(name: String, help: String) : CliktCommand(name = name, help = help) {
   private val toolContext: ToolContext by requireObject()
 
-  private val id by option(
+  val targetVehicleId by option(
     "--id",
     help = "Target Vehicle ID"
   ).long().required()
@@ -33,7 +33,7 @@ abstract class VehicleSpecificCommand(name: String, help: String) : CliktCommand
   @OptIn(ExperimentalTime::class)
   suspend fun possibleVehicleWake(override: Boolean = false): Vehicle =
     if (wake || override) {
-      VehicleWakeHelper(toolContext.client!!).wake(id)
+      VehicleWakeHelper(toolContext.client!!).wake(targetVehicleId)
     } else {
       getTargetVehicle()
     }
@@ -46,17 +46,17 @@ abstract class VehicleSpecificCommand(name: String, help: String) : CliktCommand
   }
 
   suspend fun getTargetVehicle(): Vehicle =
-    toolContext.client!!.getVehicle(id)
+    toolContext.client!!.getVehicle(targetVehicleId)
   suspend fun getTargetVehicleConfig(): VehicleConfig =
-    toolContext.client!!.getVehicleConfig(id)
+    toolContext.client!!.getVehicleConfig(targetVehicleId)
   suspend fun getTargetVehicleState(): VehicleState =
-    toolContext.client!!.getVehicleState(id)
+    toolContext.client!!.getVehicleState(targetVehicleId)
   suspend fun getTargetVehicleChargeState(): ChargeState =
-    toolContext.client!!.getVehicleChargeState(id)
+    toolContext.client!!.getVehicleChargeState(targetVehicleId)
   suspend fun getTargetVehicleClimateState(): ClimateState =
-    toolContext.client!!.getVehicleClimateState(id)
+    toolContext.client!!.getVehicleClimateState(targetVehicleId)
   suspend fun getTargetVehicleGuiSettings(): GuiSettings =
-    toolContext.client!!.getVehicleGuiSettings(id)
+    toolContext.client!!.getVehicleGuiSettings(targetVehicleId)
   suspend fun getTargetVehicleDriveState(): DriveState =
-    toolContext.client!!.getVehicleDriveState(id)
+    toolContext.client!!.getVehicleDriveState(targetVehicleId)
 }

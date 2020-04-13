@@ -15,6 +15,8 @@ import org.teslatoolkit.model.DriveState
 import org.teslatoolkit.model.GuiSettings
 import org.teslatoolkit.model.Vehicle
 import org.teslatoolkit.model.VehicleState
+import org.teslatoolkit.model.command.CommandRequest
+import org.teslatoolkit.model.command.CommandResponse
 
 /**
  * A synchronous Java-friendly version of [TeslaClient].
@@ -87,6 +89,16 @@ class TeslaClientSync(val client: TeslaClient) : AutoCloseable {
    */
   fun getVehicleGuiSettings(id: Long): GuiSettings = runBlocking {
     client.getVehicleGuiSettings(id)
+  }
+
+  /**
+   * Sends a [CommandRequest] to the vehicle specified by [id].
+   *
+   * @param id The global vehicle ID, same as [Vehicle.globalId].
+   * @param command The [CommandRequest] describing the command.
+   */
+  fun <T : CommandRequest<T>> sendVehicleCommand(id: Long, command: T): CommandResponse = runBlocking {
+    client.sendVehicleCommand(id, command)
   }
 
   /**

@@ -4,8 +4,16 @@ import com.github.ajalt.clikt.core.subcommands
 import org.teslatoolkit.tool.api.ApiCommand
 import org.teslatoolkit.tool.api.ApiGetCommand
 import org.teslatoolkit.tool.vehicle.VehicleCommand
+import org.teslatoolkit.tool.vehicle.VehicleExecuteCommand
 import org.teslatoolkit.tool.vehicle.VehicleListCommand
 import org.teslatoolkit.tool.vehicle.VehicleShowCommand
+import org.teslatoolkit.tool.vehicle.command.ExecuteActuateTrunkCommand
+import org.teslatoolkit.tool.vehicle.command.ExecuteDoorLockCommand
+import org.teslatoolkit.tool.vehicle.command.ExecuteDoorUnlockCommand
+import org.teslatoolkit.tool.vehicle.command.ExecuteFlashLightsCommand
+import org.teslatoolkit.tool.vehicle.command.ExecuteHonkHornCommand
+import org.teslatoolkit.tool.vehicle.command.ExecuteRemoteStartCommand
+import org.teslatoolkit.tool.vehicle.command.ExecuteSetSentryModeCommand
 import org.teslatoolkit.tool.vehicle.show.ShowRawVehicleCommand
 import org.teslatoolkit.tool.vehicle.show.ShowVehicleChargeStateCommand
 import org.teslatoolkit.tool.vehicle.show.ShowVehicleClimateStateCommand
@@ -26,6 +34,15 @@ fun main(args: Array<String>) {
         ShowVehicleGuiSettingsCommand(),
         ShowVehicleDriveStateCommand(),
         ShowVehicleClimateStateCommand()
+      ),
+      VehicleExecuteCommand().subcommands(
+        ExecuteSetSentryModeCommand(),
+        ExecuteRemoteStartCommand(),
+        ExecuteHonkHornCommand(),
+        ExecuteFlashLightsCommand(),
+        ExecuteDoorLockCommand(),
+        ExecuteDoorUnlockCommand(),
+        ExecuteActuateTrunkCommand()
       )
     ),
     ApiCommand().subcommands(
