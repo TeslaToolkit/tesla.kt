@@ -14,6 +14,8 @@ import org.teslatoolkit.model.ClimateState
 import org.teslatoolkit.model.DriveState
 import org.teslatoolkit.model.GuiSettings
 import org.teslatoolkit.model.Vehicle
+import org.teslatoolkit.model.VehicleConfig
+import org.teslatoolkit.model.VehicleData
 import org.teslatoolkit.model.VehicleState
 import org.teslatoolkit.model.command.CommandRequest
 import org.teslatoolkit.model.command.CommandResponse
@@ -59,15 +61,27 @@ class TeslaClientSync(val client: TeslaClient) : AutoCloseable {
    * Get the [ChargeState] for the vehicle specified by [id].
    *
    * @param id The global vehicle ID, same as [Vehicle.globalId].
+   * @return The [VehicleConfig] instance.
    */
   fun getVehicleChargeState(id: Long): ChargeState = runBlocking {
     client.getVehicleChargeState(id)
   }
 
   /**
+   * Get the [VehicleConfig] for the vehicle specified by [id].
+   *
+   * @param id The global vehicle ID, same as [Vehicle.globalId].
+   * @return The [VehicleConfig] instance.
+   */
+  fun getVehicleConfig(id: Long): VehicleConfig = runBlocking {
+    client.getVehicleConfig(id)
+  }
+
+  /**
    * Get the [ClimateState] for the vehicle specified by [id].
    *
    * @param id The global vehicle ID, same as [Vehicle.globalId].
+   * @return The [ClimateState] instance.
    */
   fun getVehicleClimateState(id: Long): ClimateState = runBlocking {
     client.getVehicleClimateState(id)
@@ -77,6 +91,7 @@ class TeslaClientSync(val client: TeslaClient) : AutoCloseable {
    * Get the [DriveState] for the vehicle specified by [id].
    *
    * @param id The global vehicle ID, same as [Vehicle.globalId].
+   * @return The [DriveState] instance.
    */
   fun getVehicleDriveState(id: Long): DriveState = runBlocking {
     client.getVehicleDriveState(id)
@@ -86,9 +101,20 @@ class TeslaClientSync(val client: TeslaClient) : AutoCloseable {
    * Get the [GuiSettings] for the vehicle specified by [id].
    *
    * @param id The global vehicle ID, same as [Vehicle.globalId].
+   * @return The [GuiSettings] instance.
    */
   fun getVehicleGuiSettings(id: Long): GuiSettings = runBlocking {
     client.getVehicleGuiSettings(id)
+  }
+
+  /**
+   * Get the [VehicleData] for the vehicle specified by [id].
+   *
+   * @param id The global vehicle ID, same as [Vehicle.globalId].
+   * @return The [VehicleData] instance.
+   */
+  fun getVehicleData(id: Long): VehicleData = runBlocking {
+    client.getVehicleData(id)
   }
 
   /**
@@ -96,6 +122,7 @@ class TeslaClientSync(val client: TeslaClient) : AutoCloseable {
    *
    * @param id The global vehicle ID, same as [Vehicle.globalId].
    * @param command The [CommandRequest] describing the command.
+   * @return The [CommandResponse] to the request.
    */
   fun <T : CommandRequest<T>> sendVehicleCommand(id: Long, command: T): CommandResponse = runBlocking {
     client.sendVehicleCommand(id, command)

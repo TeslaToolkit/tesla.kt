@@ -13,6 +13,7 @@ import org.teslatoolkit.model.DriveState
 import org.teslatoolkit.model.GuiSettings
 import org.teslatoolkit.model.Vehicle
 import org.teslatoolkit.model.VehicleConfig
+import org.teslatoolkit.model.VehicleData
 import org.teslatoolkit.model.VehicleState
 import org.teslatoolkit.model.command.CommandRequest
 import org.teslatoolkit.model.command.CommandResponse
@@ -118,7 +119,21 @@ class TeslaHttpClient(val http: TeslaHttpService, val auth: AuthenticationMethod
       )
     )
 
-  override suspend fun <T : CommandRequest<T>> sendVehicleCommand(id: Long, command: T): CommandResponse =
+  override suspend fun getVehicleData(id: Long): VehicleData =
+    json.parse(
+      JsonResponseWrapper.serializer(
+        VehicleData.serializer()
+      ),
+      http.sendGetRequest(
+        path = "/api/1/vehicles/$id/vehicle_data",
+        token = auth.getAccessToken(this)
+      )
+    ).response
+
+  override suspend fun <T : CommandRequest<T>> sendVehicleCommand(
+    id: Long,
+    command: T
+  ): CommandResponse =
     json.parse(
       JsonResponseWrapper.serializer(
         CommandResponse.serializer()

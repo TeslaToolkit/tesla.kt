@@ -4,8 +4,8 @@ import java.nio.charset.StandardCharsets
 import java.util.Base64
 
 plugins {
-  kotlin("multiplatform") version "1.3.71" apply false
-  kotlin("plugin.serialization") version "1.3.71" apply false
+  kotlin("multiplatform") version "1.3.72" apply false
+  kotlin("plugin.serialization") version "1.3.72" apply false
   id("org.jetbrains.dokka") version "0.10.1" apply false
 
   id("com.diffplug.gradle.spotless") version "3.27.2"

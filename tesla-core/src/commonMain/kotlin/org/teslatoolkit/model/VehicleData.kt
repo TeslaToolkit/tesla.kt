@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Vehicle(
+data class VehicleData(
   @SerialName("id")
   val globalId: Long,
 
@@ -48,5 +48,23 @@ data class Vehicle(
   val backseatTokenUpdatedAt: String? = null,
 
   @SerialName("tokens")
-  val tokens: List<String>? = null
+  val tokens: List<String>? = null,
+
+  @SerialName("charge_state")
+  val chargeState: ChargeState? = null,
+
+  @SerialName("drive_state")
+  val driveState: DriveState? = null,
+
+  @SerialName("vehicle_state")
+  val vehicleState: VehicleState? = null,
+
+  @SerialName("vehicle_config")
+  val vehicleConfig: VehicleConfig? = null,
+
+  @SerialName("climate_state")
+  val climateState: ClimateState? = null,
+
+  @SerialName("gui_settings")
+  val guiSettings: GuiSettings? = null
 )

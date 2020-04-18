@@ -6,6 +6,7 @@ import org.teslatoolkit.model.DriveState
 import org.teslatoolkit.model.GuiSettings
 import org.teslatoolkit.model.Vehicle
 import org.teslatoolkit.model.VehicleConfig
+import org.teslatoolkit.model.VehicleData
 import org.teslatoolkit.model.VehicleState
 import org.teslatoolkit.model.command.CommandRequest
 import org.teslatoolkit.model.command.CommandResponse
@@ -71,10 +72,18 @@ interface TeslaClient {
   suspend fun getVehicleConfig(id: Long): VehicleConfig
 
   /**
+   * Get the [VehicleData] for the vehicle specified by [id].
+   *
+   * @param id The global vehicle ID, same as [Vehicle.globalId].
+   */
+  suspend fun getVehicleData(id: Long): VehicleData
+
+  /**
    * Sends a [CommandRequest] to the vehicle specified by [id].
    *
    * @param id The global vehicle ID, same as [Vehicle.globalId].
    * @param command The [CommandRequest] describing the command.
+   * @return The [CommandResponse] to the request.
    */
   suspend fun <T : CommandRequest<T>> sendVehicleCommand(id: Long, command: T): CommandResponse
 
