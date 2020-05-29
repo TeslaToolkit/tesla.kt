@@ -1,5 +1,8 @@
+import org.gradle.internal.os.OperatingSystem as GradleOperatingSystem
 import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.targets.js.npm.NpmResolverPlugin
+import org.jetbrains.kotlin.konan.target.Family as KonanTargetFamily
 
 plugins {
   `maven-publish`
@@ -16,11 +19,31 @@ plugins.apply(NpmResolverPlugin::class.java)
 val ktorVersion = "1.3.2"
 val kotlinSerializationVersion = "0.20.0"
 val kotlinCoroutinesVersion = "1.3.5"
-val klockVersion = "1.7.3"
+val klockVersion = "1.10.0"
 
 fun ktor(name: String): String = "io.ktor:ktor-$name:$ktorVersion"
 fun kotlinx(name: String, version: String): String = "org.jetbrains.kotlinx:kotlinx-$name:$version"
 fun klock(name: String): String = "com.soywiz.korlibs.klock:$name:$klockVersion"
+
+fun KotlinNativeTarget.configureNativeTarget() {
+  compilations["main"].defaultSourceSet {
+    kotlin.srcDir("src/posixMain/kotlin")
+    dependencies {
+      implementation(klock("klock-${targetName.toLowerCase()}"))
+      implementation(kotlinx("serialization-runtime-native", kotlinSerializationVersion))
+      implementation(ktor("client-serialization-native"))
+
+      if (arrayOf(
+          KonanTargetFamily.IOS,
+          KonanTargetFamily.WATCHOS,
+          KonanTargetFamily.TVOS).contains(konanTarget.family)) {
+        implementation(ktor("client-ios"))
+      } else {
+        implementation(ktor("client-curl"))
+      }
+    }
+  }
+}
 
 kotlin {
   sourceSets {
@@ -88,6 +111,27 @@ kotlin {
         implementation(kotlin("test-js"))
       }
     }
+  }
+
+  if (GradleOperatingSystem.current().isLinux) {
+    linuxX64().configureNativeTarget()
+  }
+
+  if (GradleOperatingSystem.current().isMacOsX) {
+    macosX64().configureNativeTarget()
+    iosArm64().configureNativeTarget()
+    iosArm32().configureNativeTarget()
+    iosX64().configureNativeTarget()
+    watchosArm32().configureNativeTarget()
+    watchosArm64().configureNativeTarget()
+    watchosX86().configureNativeTarget()
+    tvosArm64().configureNativeTarget()
+    tvosX64().configureNativeTarget()
+  }
+
+  if (GradleOperatingSystem.current().isWindows) {
+    mingwX64().configureNativeTarget()
+    mingwX86().configureNativeTarget()
   }
 }
 

@@ -1,10 +1,19 @@
+import org.gradle.internal.os.OperatingSystem as GradleOperatingSystem
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
 plugins {
   kotlin("multiplatform")
   kotlin("plugin.serialization")
 }
 
-val cliktVersion = "2.6.0"
+val cliktVersion = "2.7.1"
 fun clikt(name: String): String = "com.github.ajalt:$name:$cliktVersion"
+
+fun KotlinNativeTarget.configureNativeTarget() {
+  compilations["main"].defaultSourceSet {
+    kotlin.srcDir("src/posixMain/kotlin")
+  }
+}
 
 kotlin {
   sourceSets {
@@ -22,6 +31,19 @@ kotlin {
     mavenPublication {
       artifactId = "tesla-tool-jvm"
     }
+  }
+
+  if (GradleOperatingSystem.current().isLinux) {
+    linuxX64().configureNativeTarget()
+  }
+
+  if (GradleOperatingSystem.current().isMacOsX) {
+    macosX64().configureNativeTarget()
+  }
+
+  if (GradleOperatingSystem.current().isWindows) {
+    mingwX64().configureNativeTarget()
+    mingwX86().configureNativeTarget()
   }
 }
 

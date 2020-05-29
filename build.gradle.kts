@@ -1,4 +1,3 @@
-
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.nio.charset.StandardCharsets
 import java.util.Base64
@@ -8,7 +7,7 @@ plugins {
   kotlin("plugin.serialization") version "1.3.72" apply false
   id("org.jetbrains.dokka") version "0.10.1" apply false
 
-  id("com.diffplug.gradle.spotless") version "3.27.2"
+  id("com.diffplug.gradle.spotless") version "4.0.1"
 }
 
 allprojects {
@@ -156,6 +155,6 @@ subprojects {
 }
 
 tasks.withType<Wrapper> {
-  gradleVersion = "6.3"
+  gradleVersion = "6.4.1"
   distributionType = Wrapper.DistributionType.ALL
 }
