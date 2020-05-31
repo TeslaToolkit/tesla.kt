@@ -8,10 +8,12 @@ import org.teslatoolkit.tool.vehicle.VehicleExecuteCommand
 import org.teslatoolkit.tool.vehicle.VehicleListCommand
 import org.teslatoolkit.tool.vehicle.VehicleShowCommand
 import org.teslatoolkit.tool.vehicle.command.ExecuteActuateTrunkCommand
+import org.teslatoolkit.tool.vehicle.command.ExecuteCloseChargePortCommand
 import org.teslatoolkit.tool.vehicle.command.ExecuteDoorLockCommand
 import org.teslatoolkit.tool.vehicle.command.ExecuteDoorUnlockCommand
 import org.teslatoolkit.tool.vehicle.command.ExecuteFlashLightsCommand
 import org.teslatoolkit.tool.vehicle.command.ExecuteHonkHornCommand
+import org.teslatoolkit.tool.vehicle.command.ExecuteOpenChargePortCommand
 import org.teslatoolkit.tool.vehicle.command.ExecuteRemoteStartCommand
 import org.teslatoolkit.tool.vehicle.command.ExecuteSetSentryModeCommand
 import org.teslatoolkit.tool.vehicle.show.ShowRawVehicleCommand
@@ -42,7 +44,9 @@ fun main(args: Array<String>) {
         ExecuteFlashLightsCommand(),
         ExecuteDoorLockCommand(),
         ExecuteDoorUnlockCommand(),
-        ExecuteActuateTrunkCommand()
+        ExecuteActuateTrunkCommand(),
+        ExecuteOpenChargePortCommand(),
+        ExecuteCloseChargePortCommand()
       )
     ),
     ApiCommand().subcommands(
