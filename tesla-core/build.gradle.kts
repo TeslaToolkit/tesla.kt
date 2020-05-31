@@ -16,10 +16,10 @@ plugins {
 
 plugins.apply(NpmResolverPlugin::class.java)
 
-val ktorVersion = "1.3.2"
-val kotlinSerializationVersion = "0.20.0"
-val kotlinCoroutinesVersion = "1.3.5"
-val klockVersion = "1.10.0"
+val ktorVersion: String by project
+val kotlinSerializationVersion: String by project
+val kotlinCoroutinesVersion: String by project
+val klockVersion: String by project
 
 fun ktor(name: String): String = "io.ktor:ktor-$name:$ktorVersion"
 fun kotlinx(name: String, version: String): String = "org.jetbrains.kotlinx:kotlinx-$name:$version"

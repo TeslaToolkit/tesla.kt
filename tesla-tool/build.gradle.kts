@@ -6,10 +6,20 @@ plugins {
   kotlin("plugin.serialization")
 }
 
-val cliktVersion = "2.7.1"
+val cliktVersion: String by project
 fun clikt(name: String): String = "com.github.ajalt:$name:$cliktVersion"
 
+val enableNativeToolTargets: Boolean = project.properties.getOrDefault(
+  "enableNativeToolTargets", false
+) as Boolean
+
 fun KotlinNativeTarget.configureNativeTarget() {
+  binaries {
+    executable {
+      entryPoint = "org.teslatoolkit.tool.main"
+    }
+  }
+
   compilations["main"].defaultSourceSet {
     kotlin.srcDir("src/posixMain/kotlin")
   }
@@ -33,17 +43,19 @@ kotlin {
     }
   }
 
-  if (GradleOperatingSystem.current().isLinux) {
-    linuxX64().configureNativeTarget()
-  }
+  if (enableNativeToolTargets) {
+    if (GradleOperatingSystem.current().isLinux) {
+      linuxX64().configureNativeTarget()
+    }
 
-  if (GradleOperatingSystem.current().isMacOsX) {
-    macosX64().configureNativeTarget()
-  }
+    if (GradleOperatingSystem.current().isMacOsX) {
+      macosX64().configureNativeTarget()
+    }
 
-  if (GradleOperatingSystem.current().isWindows) {
-    mingwX64().configureNativeTarget()
-    mingwX86().configureNativeTarget()
+    if (GradleOperatingSystem.current().isWindows) {
+      mingwX64().configureNativeTarget()
+      mingwX86().configureNativeTarget()
+    }
   }
 }
 

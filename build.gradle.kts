@@ -10,6 +10,8 @@ plugins {
   id("com.diffplug.gradle.spotless") version "4.0.1"
 }
 
+val gradleWrapperVersion: String by project
+
 allprojects {
   apply(plugin = "com.diffplug.gradle.spotless")
 
@@ -101,7 +103,7 @@ subprojects {
       pom {
         url.set("https://github.com/TeslaToolkit/tesla.kt")
         scm {
-          url.set("ttps://github.com/TeslaToolkit/tesla.kt")
+          url.set("https://github.com/TeslaToolkit/tesla.kt")
           connection.set("scm:git:git://github.com/TeslaToolkit/tesla.kt.git")
           developerConnection.set("scm:git:ssh://git@github.com/TeslaToolkit/tesla.kt.git")
           tag.set("master")
@@ -147,14 +149,14 @@ subprojects {
       System.getenv("TESLA_KT_SIGN_ENFORCE") == "true"
 
     if (publishSigningKey != null && publishSigningPassphrase != null && !isVersionSnapshot) {
-      val realSigningKey = java.util.Base64.getDecoder().decode(publishSigningKey)
-      useInMemoryPgpKeys(String(realSigningKey, java.nio.charset.StandardCharsets.UTF_8), publishSigningPassphrase)
+      val realSigningKey = Base64.getDecoder().decode(publishSigningKey)
+      useInMemoryPgpKeys(String(realSigningKey, StandardCharsets.UTF_8), publishSigningPassphrase)
       sign(extensions.getByType(PublishingExtension::class.java).publications)
     }
   }
 }
 
 tasks.withType<Wrapper> {
-  gradleVersion = "6.4.1"
+  gradleVersion = gradleWrapperVersion
   distributionType = Wrapper.DistributionType.ALL
 }
