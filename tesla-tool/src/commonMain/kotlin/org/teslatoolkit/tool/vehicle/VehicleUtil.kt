@@ -8,11 +8,18 @@ import org.teslatoolkit.model.Vehicle
 import org.teslatoolkit.model.VehicleConfig
 import org.teslatoolkit.model.VehicleState
 
-private fun Boolean.open() = if (this) "Open" else "Closed"
-private fun Boolean.locked() = if (this) "Locked" else "Unlocked"
-private fun Boolean.enabled() = if (this) "Enabled" else "Disabled"
-private fun Boolean.supported() = if (this) "Supported" else "Unsupported"
-private fun Boolean.on() = if (this) "On" else "Off"
+private fun <T> Boolean.either(trueState: T, falseState: T): T =
+  if (this) trueState else falseState
+private fun Boolean.open() =
+  either("Open", "Closed")
+private fun Boolean.locked() =
+  either("Locked", "Unlocked")
+private fun Boolean.enabled() =
+  either("Enabled", "Disabled")
+private fun Boolean.supported() =
+  either("Supported", "Unsupported")
+private fun Boolean.on() =
+  either("On", "Off")
 
 fun Vehicle.printHumanFormat() {
   println("Vehicle $globalId:")
