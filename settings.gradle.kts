@@ -6,5 +6,7 @@ include(
   ":examples:simple-java",
   ":examples:simple-kotlin",
   ":examples:simple-groovy",
-  ":examples:complex-java"
+  ":examples:complex-java",
+  ":dists:teslactl",
+  ":dists:teslactl-fatjar"
 )

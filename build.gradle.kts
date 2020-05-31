@@ -8,9 +8,11 @@ plugins {
   id("org.jetbrains.dokka") version "0.10.1" apply false
 
   id("com.diffplug.gradle.spotless") version "4.0.1"
+  id("com.github.johnrengelman.shadow") version "5.2.0" apply false
 }
 
 val gradleWrapperVersion: String by project
+val teslaKotlinVersion: String by project
 
 allprojects {
   apply(plugin = "com.diffplug.gradle.spotless")
@@ -27,7 +29,7 @@ allprojects {
 
 subprojects {
   group = "org.teslatoolkit"
-  version = "0.2.0-SNAPSHOT"
+  version = teslaKotlinVersion
 
   val isVersionSnapshot = version.toString().endsWith("SNAPSHOT")
 
